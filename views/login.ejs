@@ -1,0 +1,19 @@
+<%- include('layout', {
+    title: "Login",
+    user: user,
+    cart: cart,
+    wishlist: wishlist,
+    cartCount: cartCount,
+    body: `
+      <section>
+        <h1>Login</h1>
+        ${error ? `<p class="error">${error}</p>` : ''}
+        <form method="post" action="/login" class="auth-form">
+          <label>Email <input name="email" type="email" required /></label>
+          <label>Password <input name="password" type="password" required /></label>
+          <button class="btn">Login</button>
+        </form>
+      </section>
+    `
+  }) %>
+  

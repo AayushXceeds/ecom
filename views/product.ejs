@@ -1,0 +1,150 @@
+<%- include('layout', {
+    title: product.title,
+    user: user,
+    wishlist: wishlist,
+    cart: cart,
+    cartCount: cartCount,
+    body: ""
+}) %>
+
+
+<section class="product-page">
+
+  <a href="/" class="back-link">← Back to shop</a>
+
+  <div class="product-wrapper">
+
+    <!-- LEFT: GALLERY -->
+    <div class="product-images">
+
+      <div class="main-image-wrap">
+        <img id="mainImage" class="main-image" 
+             src="<%= product.images[Object.keys(product.images)[0]][0] %>" />
+      </div>
+
+      <div id="thumbs" class="thumbnail-row">
+        <% let firstColor = Object.keys(product.images)[0]; %>
+        <% product.images[firstColor].forEach(img => { %>
+          <img class="thumbnail" src="<%= img %>" data-img="<%= img %>">
+        <% }) %>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: DETAILS -->
+    <div class="details">
+
+      <h1><%= product.title %></h1>
+
+      <div class="rating-line">
+        <div class="avg-rating"><%= avgRating ? avgRating.toFixed(1) : "0.0" %></div>
+        <div class="stars">
+          <% for (let i=0; i<Math.round(avgRating); i++) { %>★<% } %>
+          <% for (let i=0; i<5-Math.round(avgRating); i++) { %>☆<% } %>
+        </div>
+        <div class="review-count">(<%= product.reviews.length %> reviews)</div>
+      </div>
+
+      <p class="price">₹<%= product.price %></p>
+      <p><%= product.desc %></p>
+
+      <!-- COLOR SELECTOR -->
+      <label><strong>Choose Colour:</strong></label>
+      <select id="colorSelect" class="color-select">
+        <% Object.keys(product.images).forEach(color => { %>
+          <option value="<%= color %>">
+            <%= color %> (<%= product.stock[color] %> left)
+          </option>
+        <% }) %>
+      </select>
+
+      <!-- ADD TO CART -->
+      <form method="post" action="/cart/add" class="add-cart">
+        <input type="hidden" name="id" value="<%= product.id %>">
+        <input type="hidden" name="qty" value="1">
+        <input type="hidden" id="selectedColorInput" name="color" value="<%= Object.keys(product.images)[0] %>">
+        <button class="btn primary">Add to cart</button>
+      </form>
+
+      <!-- WISHLIST -->
+      <form method="post" action="/wishlist/toggle" style="margin-top:8px;">
+        <input type="hidden" name="productId" value="<%= product.id %>">
+        <button class="btn secondary">
+          <%= wishlist.includes(product.id) ? "Remove from Wishlist ♥" : "Add to Wishlist ♡" %>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="reviews-area">
+
+    <div class="reviews-header">
+      <h2>Reviews</h2>
+
+      <div class="sort-box">
+        <form method="get" action="/product/<%= product.id %>">
+          <label>Sort:</label>
+          <select name="sort" onchange="this.form.submit()">
+            <option value="newest" <%= sort === "newest" ? "selected" : "" %>>Newest</option>
+            <option value="highest" <%= sort === "highest" ? "selected" : "" %>>Highest</option>
+            <option value="lowest" <%= sort === "lowest" ? "selected" : "" %>>Lowest</option>
+          </select>
+        </form>
+      </div>
+    </div>
+
+    <div class="reviews">
+      <% if (reviews.length === 0) { %>
+        <p>No reviews yet. Be the first!</p>
+      <% } else { %>
+        <% reviews.forEach(r => { %>
+          <div class="review-card">
+            <div class="review-top">
+              <strong><%= r.user %></strong>
+              <span class="review-date"><%= new Date(r.createdAt).toLocaleDateString() %></span>
+            </div>
+
+            <div class="review-stars">
+              <% for (let i=0; i<r.rating; i++) { %>★<% } %>
+              <% for (let i=0; i<5-r.rating; i++) { %>☆<% } %>
+            </div>
+
+            <p><%= r.comment %></p>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+
+    <!-- Review Form -->
+    <div class="review-form-wrap">
+      <h3>Add your review</h3>
+
+      <form method="post" action="/review/add" class="review-form">
+        <input type="hidden" name="productId" value="<%= product.id %>">
+
+        <label>Rating:</label>
+        <select name="rating" required>
+          <option value="5">5 — Excellent</option>
+          <option value="4">4 — Good</option>
+          <option value="3">3 — Okay</option>
+          <option value="2">2 — Not great</option>
+          <option value="1">1 — Bad</option>
+        </select>
+
+        <label>Comment:</label>
+        <textarea name="comment" required></textarea>
+
+        <button class="btn">Submit Review</button>
+      </form>
+
+    </div>
+
+  </div>
+
+  <script>
+    window.PRODUCT = JSON.parse(`<%- JSON.stringify(product) %>`);
+  </script>
+
+</section>

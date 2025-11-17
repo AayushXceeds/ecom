@@ -1,0 +1,46 @@
+<%- include('layout', {
+    title: "Your Cart",
+    user: user,
+    cart: cart,
+    wishlist: wishlist,
+    cartCount: cartCount,
+    body: `
+      <section>
+        <h1>Your Cart</h1>
+        ${(() => {
+          const items = Object.values(cart || {});
+          if (items.length === 0) return '<p>Your cart is empty. <a href="/">Go shopping</a></p>';
+  
+          let total = 0;
+          const rows = items.map(it => {
+            const subtotal = it.product.price * it.qty;
+            total += subtotal;
+            return \`
+              <tr>
+                <td>\${it.product.title} <small style="color:#666">(\${it.color})</small></td>
+                <td>₹\${it.product.price}</td>
+                <td><input type="number" name="\${it.productId}::\${it.color}" value="\${it.qty}" min="0" /></td>
+                <td>₹\${subtotal}</td>
+              </tr>
+            \`;
+          }).join('');
+          return \`
+            <form method="post" action="/cart/update">
+              <table class="cart-table">
+                <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+                <tbody>\${rows}</tbody>
+              </table>
+              <p class="total">Total: ₹\${total}</p>
+              <div class="cart-actions">
+                <button class="btn" type="submit">Update cart</button>
+              </div>
+            </form>
+            <form method="post" action="/checkout" style="margin-top:12px;">
+              <button class="btn primary">Checkout</button>
+            </form>
+          \`;
+        })()}
+      </section>
+    `
+  }) %>
+  

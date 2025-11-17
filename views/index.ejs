@@ -1,0 +1,32 @@
+<%- include('layout', { 
+    title: "Shop",
+    user: user,
+    cart: cart,
+    wishlist: wishlist,
+    cartCount: cartCount,
+    body: `
+      <section>
+        <h1>Products</h1>
+        <div class="grid">
+          ${products.map(p => `
+            <div class="card">
+              <div class="card-img"><img src="${Object.values(p.images)[0][0]}" alt="${p.title}" /></div>
+              <h3>${p.title}</h3>
+              <p class="price">₹${p.price}</p>
+              <p>${p.desc}</p>
+  
+              <div class="card-row">
+                <a class="btn" href="/product/${p.id}">View</a>
+  
+                <form method="post" action="/wishlist/toggle" style="display:inline;">
+                  <input type="hidden" name="productId" value="${p.id}" />
+                  <button class="btn secondary">${(wishlist || []).includes(p.id) ? 'Remove ♥' : 'Wishlist ♡'}</button>
+                </form>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `
+  }) %>
+  

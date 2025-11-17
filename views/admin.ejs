@@ -1,0 +1,30 @@
+<%- include('layout', {
+    title: "Admin",
+    user: user,
+    cart: cart,
+    wishlist: wishlist,
+    cartCount: cartCount,
+    body: `
+      <section>
+        <h1>Admin / Orders</h1>
+        ${message ? `<p class="success">${message}</p>` : ''}
+        ${(orders && orders.length>0) ? `
+          <table class="orders">
+            <thead><tr><th>Order ID</th><th>User</th><th>Items</th><th>Total</th><th>Date</th></tr></thead>
+            <tbody>
+              ${orders.map(o => `
+                <tr>
+                  <td>${o.id}</td>
+                  <td>${o.userId}</td>
+                  <td><ul>${o.items.map(i => `<li>${i.title} x ${i.qty} (${i.color})</li>`).join('')}</ul></td>
+                  <td>₹${o.total}</td>
+                  <td>${new Date(o.createdAt).toLocaleString()}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        ` : '<p>No orders yet.</p>'}
+      </section>
+    `
+  }) %>
+  

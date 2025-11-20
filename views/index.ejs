@@ -1,26 +1,23 @@
-<%- include('layout', { title: 'Products', user: user, cartCount: cartCount, wishlist: (session && session.wishlist) || [] , body: '' }) %>
-
-<section class="products-list">
+<%- include('layout', {
+  title: 'Home',
+  user: user,
+  cartCount: cartCount,
+  wishlist: wishlist,
+  body: `
+<section>
   <h1>Products</h1>
-  <div class="cards">
-    <% products.forEach(p => { %>
-      <div class="card">
-        <a href="/product/<%= p.id %>">
-          <img src="<%= p.images[Object.keys(p.images)[0]][0] %>" alt="<%= p.title %>">
-        </a>
-        <h3><%= p.title %></h3>
-        <div class="price">₹<%= p.price %></div>
-        <p class="muted small"><%= p.desc %></p>
-        <div class="card-actions">
-          <a class="btn" href="/product/<%= p.id %>">View</a>
-          <form method="post" action="/cart/add" style="display:inline">
-            <input type="hidden" name="id" value="<%= p.id %>">
-            <input type="hidden" name="color" value="<%= Object.keys(p.images)[0] %>">
-            <input type="hidden" name="qty" value="1">
-            <button class="btn secondary">Add to cart</button>
-          </form>
-        </div>
-      </div>
-    <% }) %>
+  <div class="list">
+    ${products
+      .map(
+        (p) => `
+      <div class="item">
+        <img src="${Object.values(p.images)[0][0]}" width="150">
+        <h3>${p.title}</h3>
+        <p>₹${p.price}</p>
+        <a href="/product/${p.id}">View</a>
+      </div>`
+      )
+      .join('')}
   </div>
 </section>
+` }) %>

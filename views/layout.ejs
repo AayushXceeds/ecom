@@ -1,48 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title || "Ecom Demo" %></title>
-  <link rel="stylesheet" href="/style.css" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <a href="/" class="logo">EcomDemo</a>
 
-      <form action="/" method="get" class="search-form">
-        <input name="q" placeholder="Search products..." />
-        <button type="submit">Search</button>
-      </form>
+<header>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/wishlist">Wishlist (<%= wishlist.length %>)</a>
+    <a href="/cart">Cart (<%= cartCount %>)</a>
 
-      <nav class="nav-links">
-        <a href="/">Shop</a>
-        <a href="/wishlist">Wishlist (<%= (typeof wishlist !== 'undefined' ? wishlist.length : (typeof cartCount !== 'undefined' ? 0 : 0)) %>)</a>
-        <a href="/cart">Cart (<%= cartCount || 0 %>)</a>
-        <% if (!user) { %>
-          <a href="/login">Login</a>
-          <a href="/signup">Signup</a>
-        <% } else { %>
-          <span class="muted">Hi, <%= user.name %></span>
-          <% if (user.isAdmin) { %><a href="/admin">Admin</a><% } %>
-          <a href="/logout">Logout</a>
-        <% } %>
-      </nav>
-    </div>
-  </header>
+    <% if (user) { %>
+      <span>Hi, <%= user.name %></span>
+      <a href="/logout">Logout</a>
 
-  <main class="container">
-    <%- typeof body !== 'undefined' ? body : '' %>
-    <%- typeof content !== 'undefined' ? content : '' %>
-    <!-- Individual views render below -->
-    <%- include(typeof viewPartial !== 'undefined' ? viewPartial : '') %>
-  </main>
+      <% if (user.isAdmin) { %>
+        <a href="/admin">Admin</a>
+      <% } %>
 
-  <footer class="footer">
-    © <%= new Date().getFullYear() %> Ecom Demo
-  </footer>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/signup">Signup</a>
+    <% } %>
+  </nav>
+</header>
 
-  <script src="/js/main.js"></script>
+<main>
+  <%- body %>
+</main>
+
 </body>
 </html>

@@ -1,30 +1,24 @@
-<%- include('layout', {
-    title: "Admin",
-    user: user,
-    cart: cart,
-    wishlist: wishlist,
-    cartCount: cartCount,
-    body: `
-      <section>
-        <h1>Admin / Orders</h1>
-        ${message ? `<p class="success">${message}</p>` : ''}
-        ${(orders && orders.length>0) ? `
-          <table class="orders">
-            <thead><tr><th>Order ID</th><th>User</th><th>Items</th><th>Total</th><th>Date</th></tr></thead>
-            <tbody>
-              ${orders.map(o => `
-                <tr>
-                  <td>${o.id}</td>
-                  <td>${o.userId}</td>
-                  <td><ul>${o.items.map(i => `<li>${i.title} x ${i.qty} (${i.color})</li>`).join('')}</ul></td>
-                  <td>₹${o.total}</td>
-                  <td>${new Date(o.createdAt).toLocaleString()}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        ` : '<p>No orders yet.</p>'}
-      </section>
-    `
-  }) %>
-  
+<%- include('layout', { title: 'Admin', user: user, cartCount: cartCount, body: '' }) %>
+
+<section class="admin">
+  <h1>Admin Panel</h1>
+  <h3>Products</h3>
+  <table class="admin-table">
+    <thead><tr><th>ID</th><th>Title</th><th>Price</th></tr></thead>
+    <tbody>
+      <% products.forEach(p => { %>
+        <tr><td><%= p.id %></td><td><%= p.title %></td><td>₹<%= p.price %></td></tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h3>Add Product (quick JSON images)</h3>
+  <form method="post" action="/admin/add-product">
+    <label>Title</label><input name="title" required>
+    <label>Price</label><input name="price" required>
+    <label>Description</label><textarea name="desc"></textarea>
+    <label>Images JSON</label>
+    <textarea name="imagesJson" placeholder='{"Black":["/images/x.jpg","/images/y.jpg"]}' required></textarea>
+    <button class="btn">Add Product</button>
+  </form>
+</section>

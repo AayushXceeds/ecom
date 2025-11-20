@@ -1,4 +1,9 @@
-// public/js/main.js
+// small helper for any future client features
+document.addEventListener('click', function(e){
+  // placeholder for global interactions
+});
+
+// public/js/main.js1
 document.addEventListener('DOMContentLoaded', () => {
     // product page logic: only run if PRODUCT is defined
     if (window.PRODUCT) {

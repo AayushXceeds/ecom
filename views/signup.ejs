@@ -1,20 +1,14 @@
-<%- include('layout', {
-    title: "Signup",
-    user: user,
-    cart: cart,
-    wishlist: wishlist,
-    cartCount: cartCount,
-    body: `
-      <section>
-        <h1>Signup</h1>
-        ${error ? `<p class="error">${error}</p>` : ''}
-        <form method="post" action="/signup" class="auth-form">
-          <label>Name <input name="name" /></label>
-          <label>Email <input name="email" type="email" required /></label>
-          <label>Password <input name="password" type="password" required /></label>
-          <button class="btn">Create account</button>
-        </form>
-      </section>
-    `
-  }) %>
-  
+<%- include('layout', { title: 'Signup', user: user, cartCount: cartCount, body: '' }) %>
+
+<section class="auth">
+  <h2>Signup</h2>
+  <form method="post" action="/signup">
+    <label>Name</label>
+    <input name="name" required>
+    <label>Email</label>
+    <input name="email" required>
+    <label>Password</label>
+    <input name="password" type="password" required>
+    <button class="btn">Create account</button>
+  </form>
+</section>

@@ -1,31 +1,19 @@
-<%- include('layout', {
-    title: "Wishlist",
-    user: user,
-    cart: cart,
-    wishlist: wishlist,
-    cartCount: cartCount,
-    body: `
-      <section>
-        <h1>Your Wishlist</h1>
-        ${(list && list.length > 0) ? `
-          <div class="grid">
-            ${list.map(p => `
-              <div class="card">
-                <div class="card-img"><img src="${Object.values(p.images)[0][0]}" /></div>
-                <h3>${p.title}</h3>
-                <p class="price">₹${p.price}</p>
-                <div class="card-row">
-                  <a class="btn" href="/product/${p.id}">View</a>
-                  <form method="post" action="/wishlist/toggle" style="display:inline;">
-                    <input type="hidden" name="productId" value="${p.id}" />
-                    <button class="btn secondary">Remove</button>
-                  </form>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        ` : '<p>Your wishlist is empty.</p>'}
-      </section>
-    `
-  }) %>
-  
+<%- include('layout', { title: 'Wishlist', user: user, cartCount: cartCount, body: '' }) %>
+
+<section class="wishlist">
+  <h1>Wishlist</h1>
+  <% if (!items || items.length===0) { %>
+    <p>No items in wishlist.</p>
+  <% } else { %>
+    <div class="cards">
+      <% items.forEach(p => { %>
+        <div class="card">
+          <img src="<%= p.images[Object.keys(p.images)[0]][0] %>">
+          <h3><%= p.title %></h3>
+          <div class="price">₹<%= p.price %></div>
+          <a class="btn" href="/product/<%= p.id %>">View</a>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</section>

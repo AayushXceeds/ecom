@@ -2,56 +2,47 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title><%= title || "Ecom Demo" %></title>
-  <link rel="stylesheet" href="/public/style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
-
 <body>
-
-  <!-- NAV -->
   <header class="nav">
     <div class="nav-inner">
-
       <a href="/" class="logo">EcomDemo</a>
 
       <form action="/" method="get" class="search-form">
-        <input name="q" placeholder="Search..." />
-        <button>Search</button>
+        <input name="q" placeholder="Search products..." />
+        <button type="submit">Search</button>
       </form>
 
       <nav class="nav-links">
         <a href="/">Shop</a>
-        <a href="/wishlist">Wishlist (<%= wishlist?.length || 0 %>)</a>
+        <a href="/wishlist">Wishlist (<%= (typeof wishlist !== 'undefined' ? wishlist.length : (typeof cartCount !== 'undefined' ? 0 : 0)) %>)</a>
         <a href="/cart">Cart (<%= cartCount || 0 %>)</a>
-
         <% if (!user) { %>
           <a href="/login">Login</a>
           <a href="/signup">Signup</a>
         <% } else { %>
           <span class="muted">Hi, <%= user.name %></span>
-          <% if (user.isAdmin) { %>
-            <a href="/admin">Admin</a>
-          <% } %>
+          <% if (user.isAdmin) { %><a href="/admin">Admin</a><% } %>
           <a href="/logout">Logout</a>
         <% } %>
       </nav>
-
     </div>
   </header>
 
-  <!-- CONTENT -->
   <main class="container">
-    <%- body || "" %>
-    <%- typeof content !== "undefined" ? content : "" %>
-    <!-- Your pages will be rendered BELOW layout include -->
+    <%- typeof body !== 'undefined' ? body : '' %>
+    <%- typeof content !== 'undefined' ? content : '' %>
+    <!-- Individual views render below -->
+    <%- include(typeof viewPartial !== 'undefined' ? viewPartial : '') %>
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     © <%= new Date().getFullYear() %> Ecom Demo
   </footer>
 
-  <script src="/public/js/main.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>

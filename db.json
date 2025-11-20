@@ -1,0 +1,86 @@
+{
+    "users": [
+      {
+        "id": "u1",
+        "name": "Admin",
+        "email": "admin@demo.com",
+        "password": "admin",
+        "isAdmin": true
+      }
+    ],
+    "products": [
+      {
+        "id": "p1",
+        "title": "Wireless Headphones",
+        "price": 1999,
+        "desc": "Comfortable wireless headphones with deep bass and long battery life.",
+        "images": {
+          "Black Sabre": [
+            "/images/boat_blacksabre.jpg",
+            "/images/boat_blacksabre2.jpg",
+            "/images/boat_blacksabre3.jpg"
+          ],
+          "Bold Blue": [
+            "/images/boat_boldblue.jpg",
+            "/images/boat_boldblue2.jpg",
+            "/images/boat_boldblue3.jpg"
+          ]
+        },
+        "stock": {
+          "Black Sabre": 12,
+          "Bold Blue": 5
+        },
+        "reviews": []
+      },
+      {
+        "id": "p2",
+        "title": "Smart Watch",
+        "price": 3499,
+        "desc": "Track your health and messages with this stylish smartwatch.",
+        "images": {
+          "Space Blue": [
+            "/images/noise_swspaceblue.jpg",
+            "/images/noise_swcommon.jpg",
+            "/images/noise_swcommon2.jpg",
+            "/images/noise_swcommon3.jpg"
+          ],
+          "Rose Pink": [
+            "/images/noise_swrosepink.jpg",
+            "/images/noise_swcommon.jpg",
+            "/images/noise_swcommon2.jpg",
+            "/images/noise_swcommon3.jpg"
+          ],
+          "Deep Wine": [
+            "/images/noise_swdeepwine.jpg",
+            "/images/noise_swcommon.jpg",
+            "/images/noise_swcommon2.jpg",
+            "/images/noise_swcommon3.jpg"
+          ]
+        },
+        "stock": {
+          "Space Blue": 8,
+          "Rose Pink": 3,
+          "Deep Wine": 1
+        },
+        "reviews": []
+      },
+      {
+        "id": "p3",
+        "title": "Gaming Mouse",
+        "price": 1299,
+        "desc": "High precision RGB gaming mouse with adjustable DPI.",
+        "images": {
+          "Black": [
+            "/images/logi_mouse1.jpg",
+            "/images/logi_mouse2.jpg",
+            "/images/logi_mouse3.jpg"
+          ]
+        },
+        "stock": {
+          "Black": 20
+        },
+        "reviews": []
+      }
+    ]
+  }
+  
